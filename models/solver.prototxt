@@ -1,0 +1,17 @@
+net: "examples/hanzi/train_val.prototxt"
+test_iter: 666
+test_interval: 400
+base_lr: 0.01
+#lr_policy: "step"
+lr_policy: "inv"
+#gamma: 0.2
+gamma: 0.00011
+#stepsize: 4000
+power: 4.6
+display: 20
+max_iter: 450000
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 2000
+snapshot_prefix: "examples/hanzi/hanzi_alexnet_train"
+solver_mode: GPU
