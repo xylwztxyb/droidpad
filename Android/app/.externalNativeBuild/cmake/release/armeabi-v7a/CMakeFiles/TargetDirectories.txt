@@ -1,0 +1,11 @@
+/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/armeabi-v7a/src/main/cpp/zinnia/CMakeFiles/edit_cache.dir
+/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/armeabi-v7a/src/main/cpp/zinnia/CMakeFiles/rebuild_cache.dir
+/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/armeabi-v7a/src/main/cpp/zinnia/CMakeFiles/zinnia.dir
+/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/armeabi-v7a/src/main/cpp/caffe/CMakeFiles/edit_cache.dir
+/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/armeabi-v7a/src/main/cpp/caffe/CMakeFiles/rebuild_cache.dir
+/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/armeabi-v7a/src/main/cpp/caffe/CMakeFiles/caffe.dir
+/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/armeabi-v7a/src/main/jni/CMakeFiles/edit_cache.dir
+/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/armeabi-v7a/src/main/jni/CMakeFiles/rebuild_cache.dir
+/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/armeabi-v7a/src/main/jni/CMakeFiles/droidpad.dir

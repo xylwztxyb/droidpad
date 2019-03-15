@@ -1,0 +1,68 @@
+
+{
+	"buildFiles" : [ "/home/xue/AndroidStudioProjects/DroidPad/app/CMakeLists.txt" ],
+	"cleanCommands" : 
+	[
+		"/home/xue/Android/Sdk/cmake/3.6.4111459/bin/cmake --build /home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/debug/x86 --target clean"
+	],
+	"cppFileExtensions" : [ "cpp" ],
+	"libraries" : 
+	{
+		"zinnia-Debug-x86" : 
+		{
+			"abi" : "x86",
+			"artifactName" : "zinnia",
+			"buildCommand" : "/home/xue/Android/Sdk/cmake/3.6.4111459/bin/cmake --build /home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/debug/x86 --target zinnia",
+			"buildType" : "debug",
+			"files" : 
+			[
+				
+				{
+					"flags" : "  --target=i686-none-linux-android17 --gcc-toolchain=/home/xue/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64 --sysroot=/home/xue/Android/Sdk/ndk-bundle/sysroot  -Dzinnia_EXPORTS -I../../../../src/main/cpp/zinnia/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/android/support/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++abi/include  -isystem /home/xue/Android/Sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security -std=c++11  -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "/home/xue/AndroidStudioProjects/DroidPad/app/src/main/jni/native-lib.cpp",
+					"workingDirectory" : "/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/debug/x86"
+				},
+				
+				{
+					"flags" : "  --target=i686-none-linux-android17 --gcc-toolchain=/home/xue/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64 --sysroot=/home/xue/Android/Sdk/ndk-bundle/sysroot  -Dzinnia_EXPORTS -I../../../../src/main/cpp/zinnia/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/android/support/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++abi/include  -isystem /home/xue/Android/Sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security -std=c++11  -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "/home/xue/AndroidStudioProjects/DroidPad/app/src/main/cpp/zinnia/character.cpp",
+					"workingDirectory" : "/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/debug/x86"
+				},
+				
+				{
+					"flags" : "  --target=i686-none-linux-android17 --gcc-toolchain=/home/xue/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64 --sysroot=/home/xue/Android/Sdk/ndk-bundle/sysroot  -Dzinnia_EXPORTS -I../../../../src/main/cpp/zinnia/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/android/support/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++abi/include  -isystem /home/xue/Android/Sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security -std=c++11  -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "/home/xue/AndroidStudioProjects/DroidPad/app/src/main/cpp/zinnia/feature.cpp",
+					"workingDirectory" : "/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/debug/x86"
+				},
+				
+				{
+					"flags" : "  --target=i686-none-linux-android17 --gcc-toolchain=/home/xue/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64 --sysroot=/home/xue/Android/Sdk/ndk-bundle/sysroot  -Dzinnia_EXPORTS -I../../../../src/main/cpp/zinnia/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/android/support/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++abi/include  -isystem /home/xue/Android/Sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security -std=c++11  -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "/home/xue/AndroidStudioProjects/DroidPad/app/src/main/cpp/zinnia/libzinnia.cpp",
+					"workingDirectory" : "/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/debug/x86"
+				},
+				
+				{
+					"flags" : "  --target=i686-none-linux-android17 --gcc-toolchain=/home/xue/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64 --sysroot=/home/xue/Android/Sdk/ndk-bundle/sysroot  -Dzinnia_EXPORTS -I../../../../src/main/cpp/zinnia/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/android/support/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++abi/include  -isystem /home/xue/Android/Sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security -std=c++11  -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "/home/xue/AndroidStudioProjects/DroidPad/app/src/main/cpp/zinnia/recognizer.cpp",
+					"workingDirectory" : "/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/debug/x86"
+				},
+				
+				{
+					"flags" : "  --target=i686-none-linux-android17 --gcc-toolchain=/home/xue/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64 --sysroot=/home/xue/Android/Sdk/ndk-bundle/sysroot  -Dzinnia_EXPORTS -I../../../../src/main/cpp/zinnia/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/android/support/include -isystem /home/xue/Android/Sdk/ndk-bundle/sources/cxx-stl/llvm-libc++abi/include  -isystem /home/xue/Android/Sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security -std=c++11  -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "/home/xue/AndroidStudioProjects/DroidPad/app/src/main/cpp/zinnia/sexp.cpp",
+					"workingDirectory" : "/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/debug/x86"
+				}
+			],
+			"output" : "/home/xue/AndroidStudioProjects/DroidPad/app/build/intermediates/cmake/debug/obj/x86/libzinnia.so",
+			"toolchain" : "10488253677098660246"
+		}
+	},
+	"toolchains" : 
+	{
+		"10488253677098660246" : 
+		{
+			"cCompilerExecutable" : "/home/xue/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang",
+			"cppCompilerExecutable" : "/home/xue/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++"
+		}
+	}
+}

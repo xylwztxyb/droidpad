@@ -1,0 +1,8 @@
+# ninja log v5
+0	1451	0	CMakeFiles/zinnia.dir/src/main/jni/native-lib.cpp.o	abe37b8f7fc29f23
+0	2253	0	CMakeFiles/zinnia.dir/src/main/cpp/zinnia/libzinnia.cpp.o	cc2c29a9abc28195
+1	2276	0	CMakeFiles/zinnia.dir/src/main/cpp/zinnia/sexp.cpp.o	b8ad0059cadea33d
+0	2408	0	CMakeFiles/zinnia.dir/src/main/cpp/zinnia/feature.cpp.o	786621b805d77459
+0	2734	0	CMakeFiles/zinnia.dir/src/main/cpp/zinnia/character.cpp.o	748dc3a872b73c74
+1	2784	0	CMakeFiles/zinnia.dir/src/main/cpp/zinnia/recognizer.cpp.o	e436b2fcf9635344
+2784	3689	0	../../../../build/intermediates/cmake/debug/obj/x86/libzinnia.so	1720ce9c7c3f1604

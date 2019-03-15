@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DroidPad</string>
+    <string name="engine_init_error">识别引擎初始化失败</string>
+    <string name="init_engine">正在初始化识别引擎...</string>
+</resources>

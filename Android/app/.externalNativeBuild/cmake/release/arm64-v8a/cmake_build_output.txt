@@ -1,0 +1,5 @@
+running mkdir -p /home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/arm64-v8a/include/caffe/proto  2>&1
+running /usr/local/bin/protoc --cpp_out=/home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/arm64-v8a/include/caffe/proto              -I/home/xue/AndroidStudioProjects/DroidPad/app/src/main/cpp/caffe/proto             /home/xue/AndroidStudioProjects/DroidPad/app/src/main/cpp/caffe/proto/caffe.proto  2>&1
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/xue/AndroidStudioProjects/DroidPad/app/.externalNativeBuild/cmake/release/arm64-v8a
