@@ -1,0 +1,20 @@
+LIBRARY	"DroidPadIME.ime"
+
+;SECTIONS
+;		.upim_shm READ WRITE SHARED
+EXPORTS
+		ImeConversionList
+		ImeConfigure
+		ImeDestroy
+		ImeEscape
+		ImeProcessKey
+		ImeSelect
+		ImeSetActiveContext
+		ImeSetCompositionString
+		ImeToAsciiEx
+		ImeInquire
+		ImeRegisterWord
+		ImeUnregisterWord
+		ImeGetRegisterWordStyle
+		ImeEnumRegisterWord
+		NotifyIME

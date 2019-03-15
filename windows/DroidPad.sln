@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DroidPadServer", "DroidPad\DroidPad.vcxproj", "{6DF00591-5C3F-43C6-9E73-4158C440E2E5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DroidPadIME", "DroidPadIME\DroidPadIME.vcxproj", "{E5680651-E132-4ED4-981E-C5D657782A38}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "installer", "installer\installer.vcxproj", "{37C1C46E-90D0-4F26-BEAB-1C40773D3011}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DF00591-5C3F-43C6-9E73-4158C440E2E5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6DF00591-5C3F-43C6-9E73-4158C440E2E5}.Debug|Win32.Build.0 = Debug|Win32
+		{6DF00591-5C3F-43C6-9E73-4158C440E2E5}.Debug|x64.ActiveCfg = Debug|x64
+		{6DF00591-5C3F-43C6-9E73-4158C440E2E5}.Debug|x64.Build.0 = Debug|x64
+		{6DF00591-5C3F-43C6-9E73-4158C440E2E5}.Release|Win32.ActiveCfg = Release|Win32
+		{6DF00591-5C3F-43C6-9E73-4158C440E2E5}.Release|Win32.Build.0 = Release|Win32
+		{6DF00591-5C3F-43C6-9E73-4158C440E2E5}.Release|x64.ActiveCfg = Release|x64
+		{6DF00591-5C3F-43C6-9E73-4158C440E2E5}.Release|x64.Build.0 = Release|x64
+		{E5680651-E132-4ED4-981E-C5D657782A38}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E5680651-E132-4ED4-981E-C5D657782A38}.Debug|Win32.Build.0 = Debug|Win32
+		{E5680651-E132-4ED4-981E-C5D657782A38}.Debug|x64.ActiveCfg = Debug|x64
+		{E5680651-E132-4ED4-981E-C5D657782A38}.Debug|x64.Build.0 = Debug|x64
+		{E5680651-E132-4ED4-981E-C5D657782A38}.Release|Win32.ActiveCfg = Release|Win32
+		{E5680651-E132-4ED4-981E-C5D657782A38}.Release|Win32.Build.0 = Release|Win32
+		{E5680651-E132-4ED4-981E-C5D657782A38}.Release|x64.ActiveCfg = Release|x64
+		{E5680651-E132-4ED4-981E-C5D657782A38}.Release|x64.Build.0 = Release|x64
+		{37C1C46E-90D0-4F26-BEAB-1C40773D3011}.Debug|Win32.ActiveCfg = Release|Win32
+		{37C1C46E-90D0-4F26-BEAB-1C40773D3011}.Debug|Win32.Build.0 = Release|Win32
+		{37C1C46E-90D0-4F26-BEAB-1C40773D3011}.Debug|x64.ActiveCfg = Release|Win32
+		{37C1C46E-90D0-4F26-BEAB-1C40773D3011}.Release|Win32.ActiveCfg = Release|Win32
+		{37C1C46E-90D0-4F26-BEAB-1C40773D3011}.Release|Win32.Build.0 = Release|Win32
+		{37C1C46E-90D0-4F26-BEAB-1C40773D3011}.Release|x64.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
