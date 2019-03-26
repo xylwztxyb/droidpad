@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private UIHandler mHandler;
     private Thread mThread;
 
-    private FrameLayout mInitLayout;
+    private ViewStub mInitLayout;
     private ConstraintLayout mContentLayout;
     private boolean bBoundToService = false;
 
