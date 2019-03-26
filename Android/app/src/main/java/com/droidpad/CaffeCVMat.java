@@ -1,9 +1,6 @@
 package com.droidpad;
 
-import android.util.Log;
-
 public class CaffeCVMat {
-    private static final String TAG = "CaffeCVMat";
 
     static final int CF_WIDTH = 227;
     static final int CF_HEIGHT = 227;

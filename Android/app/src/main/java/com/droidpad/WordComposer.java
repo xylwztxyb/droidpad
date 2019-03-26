@@ -13,22 +13,20 @@ import java.util.List;
 
 public class WordComposer implements TextView.OnClickListener {
 
-    private static final String TAG = "WordComposer";
+    private static final String TAG = WordComposer.class.getSimpleName();
 
     private WeakReference<LinearLayout> mContainerRef;
     private LayoutInflater mInflater;
-    private Context mContext;
     private int mContainerHeight;
 
     private List<Character> mWordsList = new ArrayList<>();
     private OnWordsComposedListener mListener = null;
 
 
-    WordComposer(Context context, WeakReference<LinearLayout> containerRef) {
-        mContext = context;
-        mContainerRef = containerRef;
+    WordComposer(Context context, LinearLayout container) {
+        mContainerRef = new WeakReference<>(container);
         mInflater = LayoutInflater.from(context);
-        getLayoutOrDie().post(new Runnable() {
+        container.post(new Runnable() {
             @Override
             public void run() {
                 mContainerHeight = getLayoutOrDie().getHeight();

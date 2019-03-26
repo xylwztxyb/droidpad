@@ -13,7 +13,7 @@ public class CaffeRecognizer {
     private Timer mTimer;
     private TimerTask mTask;
     private CaffeCVMat mCVMat;
-    private boolean bTaskCompleted = true;
+    private volatile boolean bTaskCompleted = true;
 
     private DroidPadService mCaffeService;
     private IRecognizerCallback mCallback = null;
@@ -94,24 +94,26 @@ public class CaffeRecognizer {
                 mTask = new TimerTask() {
                     @Override
                     public void run() {
-                        synchronized (CaffeRecognizer.this)
-                        {
-                            bTaskCompleted = false;
-                        }
-
+                        bTaskCompleted = false;
                         if (mCallback != null)
                         {
-                            mCallback.onRecognizeStart();
-                            String result = mCaffeService.predic(mCVMat, 3);
-                            mCVMat.cvMatReset();
-                            mCallback.onRecognizeEnd();
+                            String result;
+                            try
+                            {
+                                mCallback.onRecognizeStart();
+                                result = mCaffeService.predic(mCVMat, 3);
+                                mCVMat.cvMatReset();
+                            } finally
+                            {
+                                mCallback.onRecognizeEnd();
+                            }
                             if (result != null && result.length() > 0)
                                 mCallback.onRecognized(result);
                         }
-
+                        bTaskCompleted = true;
                         synchronized (CaffeRecognizer.this)
                         {
-                            bTaskCompleted = true;
+
                             CaffeRecognizer.this.notify();
                         }
                     }

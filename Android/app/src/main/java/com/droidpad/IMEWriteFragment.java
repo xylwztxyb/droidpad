@@ -18,7 +18,6 @@ public class IMEWriteFragment extends Fragment implements IMEFakeView.OnWordsCom
     private IMEFakeView mFakeView;
     private InputMethodManager imm;
     private UIHandler mUIHandler;
-    private FloatingActionButton mActionButton;
 
     public IMEWriteFragment() {
         super();
@@ -39,7 +38,7 @@ public class IMEWriteFragment extends Fragment implements IMEFakeView.OnWordsCom
         mFakeView.setOnWordsComposedListener(this);
         mFakeView.requestFocus();
 
-        mActionButton = v.findViewById(R.id.open_ime);
+        FloatingActionButton mActionButton = v.findViewById(R.id.open_ime);
         mActionButton.setOnClickListener(this);
         return v;
     }

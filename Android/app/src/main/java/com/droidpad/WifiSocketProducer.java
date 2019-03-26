@@ -21,15 +21,13 @@ import java.nio.ByteOrder;
 
 public class WifiSocketProducer extends HandlerThread implements IDPServiceStateCallback {
 
-    private static final String TAG = "WifiSocketProducer";
-
-    private static final String NAME = "WifiSocketProducer";
+    private static final String TAG = WifiSocketProducer.class.getSimpleName();
 
     private Context mContext;
     private DPServiceHandler mServiceHandler;
     private Handler mHandler;
-    private boolean bAppHasWifiConnection = false;
-    private boolean bQuit = false;
+    private volatile boolean bAppHasWifiConnection = false;
+    private volatile boolean bQuit = false;
 
     private DatagramSocket mSocket;
     private ByteBuffer mBuff;
@@ -37,9 +35,15 @@ public class WifiSocketProducer extends HandlerThread implements IDPServiceState
 
     private ConnectivityManager mConnManager;
     private WifiBroadcastReceiver mWifiReceiver;
+    private Runnable mScanTask = new Runnable() {
+        @Override
+        public void run() {
+            scan();
+        }
+    };
 
     WifiSocketProducer(Context context, DPServiceHandler handler) {
-        super(NAME);
+        super(WifiSocketProducer.class.getSimpleName());
         mContext = context;
         mServiceHandler = handler;
         mServiceHandler.addDPServiceStateCallback(this);
@@ -188,19 +192,19 @@ public class WifiSocketProducer extends HandlerThread implements IDPServiceState
     }
 
     @Override
-    public synchronized void onSocketConnNone() {
+    public void onSocketConnNone() {
         bAppHasWifiConnection = false;
         schedualScan();
     }
 
     @Override
-    public synchronized void onSocketConnected(int type) {
+    public void onSocketConnected(int type) {
         if (type == Constants.SocketType.TYPE_ADB)
             schedualScan();
         else
         {
-            mHandler.removeCallbacksAndMessages(null);
             bAppHasWifiConnection = true;
+            mHandler.removeCallbacksAndMessages(null);
         }
     }
 
@@ -208,7 +212,7 @@ public class WifiSocketProducer extends HandlerThread implements IDPServiceState
     public void onSocketThreadInitError(int type) {
     }
 
-    private synchronized void onWifiConnectionChanged(boolean connected) {
+    private void onWifiConnectionChanged(boolean connected) {
         if (!connected)
         {
             bAppHasWifiConnection = false;
@@ -217,13 +221,6 @@ public class WifiSocketProducer extends HandlerThread implements IDPServiceState
         } else
             schedualScan();
     }
-
-    private Runnable mScanTask = new Runnable() {
-        @Override
-        public void run() {
-            scan();
-        }
-    };
 
     private class WifiBroadcastReceiver extends BroadcastReceiver {
 

@@ -6,10 +6,11 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 public class DroidPadService extends Service {
 
-    private static final String TAG = "DroidPadService";
+    private static final String TAG = DroidPadService.class.getSimpleName();
 
     private DPServiceHandler mHandler;
     private boolean bActive = false;
@@ -43,18 +44,21 @@ public class DroidPadService extends Service {
 
     @Override
     public void onDestroy() {
-        if (mEngine.isInited())
+        if (mEngine.getState() == CaffeEngine.State.INITED)
             mEngine.tearDown();
         mHandler.destroy();
         super.onDestroy();
     }
 
     void initRecognizeEngine() {
+        mEngine = CaffeEngine.getInstance();
+        CaffeEngine.State state = mEngine.getState();
+        if (state == CaffeEngine.State.INITED || state == CaffeEngine.State.INITING)
+            return;
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mEngine = CaffeEngine.getInstance();
                 if (!mEngine.setup())
                 {
                     if (mEngineStateCallback != null)
@@ -69,7 +73,7 @@ public class DroidPadService extends Service {
     }
 
     boolean isRecognizeEngineInited() {
-        return mEngine != null && mEngine.isInited();
+        return mEngine != null && mEngine.getState() == CaffeEngine.State.INITED;
     }
 
     /**
@@ -102,6 +106,8 @@ public class DroidPadService extends Service {
     }
 
     void active() {
+        if (mAdbSockProducer != null)//A active operation has been under running.
+            return;
         mAdbSockProducer = new AdbSocketProducer(this, mHandler);
         mAdbSockProducer.start();
         mWifiSockProducer = new WifiSocketProducer(this, mHandler);

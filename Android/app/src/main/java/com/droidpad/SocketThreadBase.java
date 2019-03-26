@@ -2,11 +2,10 @@ package com.droidpad;
 
 abstract class SocketThreadBase extends Thread {
 
-    private boolean bQuit = false;
-
-    private boolean bSuspend = false;
     private final Object mSuspendLock = new Object();
     private final Object mQuitLock = new Object();
+    private volatile boolean bQuit = false;
+    private volatile boolean bSuspend = false;
 
     SocketThreadBase(String name) {
         super(name);
@@ -19,20 +18,14 @@ abstract class SocketThreadBase extends Thread {
     protected abstract void onThreadQuit();
 
     final boolean isSuspended() {
-        synchronized (mSuspendLock)
-        {
-            return bSuspend;
-        }
+        return bSuspend;
     }
 
     final void requestSuspend() {
-        synchronized (mSuspendLock)
-        {
-            bSuspend = true;
-        }
+        bSuspend = true;
     }
 
-    final void suspendLock() {
+    final void suspendLocked() {
         synchronized (mSuspendLock)
         {
             bSuspend = true;
@@ -59,10 +52,7 @@ abstract class SocketThreadBase extends Thread {
 
     final void quit() {
         onThreadQuit();
-        synchronized (mQuitLock)
-        {
-            bQuit = true;
-        }
+        bQuit = true;
         synchronized (mSuspendLock)
         {
             if (bSuspend)
@@ -98,10 +88,7 @@ abstract class SocketThreadBase extends Thread {
                 }
             }
 
-            synchronized (mQuitLock)
-            {
-                if (bQuit) return;
-            }
+            if (bQuit) return;
             if (!threadLoop())
             {
                 onThreadQuit();

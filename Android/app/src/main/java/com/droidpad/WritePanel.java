@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class WritePanel extends View implements IRecognizerCallback, MainActivity.OnDPServiceAvailableListener {
-    private static final String TAG = "WritePanel";
-
+    private static final String TAG = WritePanel.class.getSimpleName();
+    private final ReentrantLock mLock = new ReentrantLock();
     private CaffeRecognizer mRecognizer;
     private List<Path> mPathList;
     private Path mCurPath;
@@ -29,7 +29,6 @@ public class WritePanel extends View implements IRecognizerCallback, MainActivit
     private UIHandler mUIHandler;
     private Context mContext;
     private boolean bActionDownPerformed = true;
-    private final ReentrantLock mLock = new ReentrantLock();
 
 
     public WritePanel(Context context, @Nullable AttributeSet attrs) {
@@ -73,7 +72,8 @@ public class WritePanel extends View implements IRecognizerCallback, MainActivit
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mRecognizer.shutdown();
+        if (mRecognizer != null)
+            mRecognizer.shutdown();
         mRecognizer = null;
         ((MainActivity) mContext).unregisterOnDPServiceAvailableListener(this);
     }
@@ -107,44 +107,48 @@ public class WritePanel extends View implements IRecognizerCallback, MainActivit
     public boolean onTouchEvent(MotionEvent event) {
         if (!mLock.tryLock() || !isEnabled())
             return true;
-
-        switch (event.getAction() & MotionEvent.ACTION_MASK)
+        try
         {
-            case MotionEvent.ACTION_DOWN:
+            switch (event.getAction() & MotionEvent.ACTION_MASK)
             {
-                bActionDownPerformed = true;
-                mCurPath = new Path();
-                mCurPath.moveTo(event.getX(0), event.getY(0));
-                if (mRecognizer != null)
-                    mRecognizer.onTouchEvent(this, event);
-                break;
-            }
-            case MotionEvent.ACTION_MOVE:
-            {
-                if (bActionDownPerformed)
+                case MotionEvent.ACTION_DOWN:
                 {
-                    mCurPath.lineTo(event.getX(0), event.getY(0));
+                    bActionDownPerformed = true;
+                    mCurPath = new Path();
+                    mCurPath.moveTo(event.getX(0), event.getY(0));
                     if (mRecognizer != null)
                         mRecognizer.onTouchEvent(this, event);
-                    invalidate();
+                    break;
                 }
-                break;
-            }
-            case MotionEvent.ACTION_UP:
-            {
-                if (bActionDownPerformed)
+                case MotionEvent.ACTION_MOVE:
                 {
-                    bActionDownPerformed = false;
-                    mPathList.add(mCurPath);
-                    if (mRecognizer != null)
-                        mRecognizer.onTouchEvent(this, event);
-                    invalidate();
+                    if (bActionDownPerformed)
+                    {
+                        mCurPath.lineTo(event.getX(0), event.getY(0));
+                        if (mRecognizer != null)
+                            mRecognizer.onTouchEvent(this, event);
+                        invalidate();
+                    }
+                    break;
                 }
-                break;
+                case MotionEvent.ACTION_UP:
+                {
+                    if (bActionDownPerformed)
+                    {
+                        bActionDownPerformed = false;
+                        mPathList.add(mCurPath);
+                        if (mRecognizer != null)
+                            mRecognizer.onTouchEvent(this, event);
+                        invalidate();
+                    }
+                    break;
+                }
             }
+            return true;
+        } finally
+        {
+            mLock.unlock();
         }
-        mLock.unlock();
-        return true;
     }
 
     private void updateEnv(DroidPadService service) {

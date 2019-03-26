@@ -16,22 +16,28 @@ import java.net.SocketException;
 
 public class AdbSocketProducer extends HandlerThread implements IDPServiceStateCallback {
 
-    private static final String TAG = "AdbSocketProducer";
-    private static final String NAME = "AdbSocketProducer";
+    private static final String TAG = AdbSocketProducer.class.getSimpleName();
 
     private DPServiceHandler mServiceHandler;
     private Handler mHandler;
     private Context mContext;
-    private boolean bAppHasConnection = false;
-    private boolean bQuit = false;
+
+    private volatile boolean bAppHasConnection = false;
+    private volatile boolean bQuit = false;
 
     private InetSocketAddress mAdbSocketAddr =
             new InetSocketAddress(Constants.SocketArg.ADB_SOCKET_LOOPBACK_ADDRESS,
                     Constants.SocketArg.ADB_PORT);
     private BatteryBroadcastReceiver mBatteryReceiver;
+    private Runnable mScanTask = new Runnable() {
+        @Override
+        public void run() {
+            tryConnect();
+        }
+    };
 
     AdbSocketProducer(Context context, DPServiceHandler handler) {
-        super(NAME);
+        super(AdbSocketProducer.class.getSimpleName());
         mContext = context;
         mServiceHandler = handler;
         mServiceHandler.addDPServiceStateCallback(this);
@@ -129,13 +135,13 @@ public class AdbSocketProducer extends HandlerThread implements IDPServiceStateC
     }
 
     @Override
-    public synchronized void onSocketConnNone() {
+    public void onSocketConnNone() {
         bAppHasConnection = false;
         schedualScan();
     }
 
     @Override
-    public synchronized void onSocketConnected(int type) {
+    public void onSocketConnected(int type) {
         bAppHasConnection = true;
         mHandler.removeCallbacksAndMessages(null);
     }
@@ -145,7 +151,7 @@ public class AdbSocketProducer extends HandlerThread implements IDPServiceStateC
 
     }
 
-    private synchronized void onUsbPlugStateChanged(boolean pluged) {
+    private void onUsbPlugStateChanged(boolean pluged) {
         if (!pluged)
         {
             mHandler.removeCallbacksAndMessages(null);
@@ -153,13 +159,6 @@ public class AdbSocketProducer extends HandlerThread implements IDPServiceStateC
         } else
             schedualScan();
     }
-
-    private Runnable mScanTask = new Runnable() {
-        @Override
-        public void run() {
-            tryConnect();
-        }
-    };
 
     private class BatteryBroadcastReceiver extends BroadcastReceiver {
 

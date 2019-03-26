@@ -19,9 +19,16 @@ public class SocketConnection extends SocketThreadBase {
     private OutputStream mOut;
     private Handler mHandler;
     private int mConnType;
-    private boolean bKickedOut = false;
+    private volatile boolean bKickedOut = false;
 
     private int mTimeoutCount = 0;
+
+    private SocketConnection(Socket sock, Handler mainHandler, int connType) {
+        super("SocketConnection");
+        mSocket = sock;
+        mHandler = mainHandler;
+        mConnType = connType;
+    }
 
     static SocketConnection create(Socket sock, Handler handler, int connType) {
         SocketConnection conn = new SocketConnection(sock, handler, connType);
@@ -31,13 +38,6 @@ public class SocketConnection extends SocketThreadBase {
             return conn;
         }
         return null;
-    }
-
-    private SocketConnection(Socket sock, Handler mainHandler, int connType) {
-        super("SocketConnection");
-        mSocket = sock;
-        mHandler = mainHandler;
-        mConnType = connType;
     }
 
     @Override
@@ -148,16 +148,13 @@ public class SocketConnection extends SocketThreadBase {
         }
     }
 
-    synchronized void kickOut() {
+    void kickOut() {
         bKickedOut = true;
     }
 
     private void notifyConnBroken() {
-        synchronized (this)
-        {
-            if (!bKickedOut)
-                mHandler.sendEmptyMessage(Constants.Command.CMD_CONNECTION_BROKEN);
-        }
+        if (!bKickedOut)
+            mHandler.sendEmptyMessage(Constants.Command.CMD_CONNECTION_BROKEN);
     }
 
     public int getType() {

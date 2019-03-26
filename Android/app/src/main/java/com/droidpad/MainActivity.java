@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.UiThread;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -36,7 +37,45 @@ public class MainActivity extends AppCompatActivity {
     private boolean bBoundToService = false;
 
     private List<OnDPServiceAvailableListener> mListeners = new ArrayList<>();
+    private IDPEngineStateCallback mEngineCallback = new IDPEngineStateCallback() {
+        @Override
+        public void onRecognizeEngineReady(DroidPadService engine) {
+            ((DroidPadApp) getApplication()).globalInit(engine);
+            onServiceAvailable(engine);
+        }
 
+        @Override
+        public void onRecognizeEngineError() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage(R.string.engine_init_error)
+                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            MainActivity.this.finish();
+                        }
+                    }).show();
+        }
+    };
+    private ServiceConnection mConn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            DroidPadService service = ((DroidPadService.DroidPadServiceBinder) iBinder).getService();
+            if (service.isRecognizeEngineInited())
+            {
+                ((DroidPadApp) getApplication()).globalInit(service);
+                onServiceAvailable(service);
+            } else
+            {
+                service.setEngineStateCallback(mEngineCallback);
+                service.initRecognizeEngine();
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,13 +135,18 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    private void onServiceAvailable(DroidPadService service) {
+    private void onServiceAvailable(final DroidPadService service) {
         updateUI(true);
         if (!service.isActive())
             service.active();
         mHandler.setDPService(service);
-        for (OnDPServiceAvailableListener listener : mListeners)
-            listener.onDPServiceAvailable(service);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (OnDPServiceAvailableListener listener : mListeners)
+                    listener.onDPServiceAvailable(service);
+            }
+        });
     }
 
     private void updateUI(final boolean serviceAvailable) {
@@ -121,48 +165,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
-
-
-    private ServiceConnection mConn = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            DroidPadService service = ((DroidPadService.DroidPadServiceBinder) iBinder).getService();
-            if (service.isRecognizeEngineInited())
-            {
-                ((DroidPadApp) getApplication()).globalInit(service);
-                onServiceAvailable(service);
-            } else
-            {
-                service.setEngineStateCallback(mEngineCallback);
-                service.initRecognizeEngine();
-            }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-
-        }
-    };
-
-    private IDPEngineStateCallback mEngineCallback = new IDPEngineStateCallback() {
-        @Override
-        public void onRecognizeEngineReady(DroidPadService engine) {
-            ((DroidPadApp) getApplication()).globalInit(engine);
-            onServiceAvailable(engine);
-        }
-
-        @Override
-        public void onRecognizeEngineError() {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage(R.string.engine_init_error)
-                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            MainActivity.this.finish();
-                        }
-                    }).show();
-        }
-    };
 
     void registerOnDPServiceAvailableListener(OnDPServiceAvailableListener listener) {
         mListeners.add(listener);
@@ -188,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public interface OnDPServiceAvailableListener {
+        @UiThread
         void onDPServiceAvailable(DroidPadService service);
     }
 }

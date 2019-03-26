@@ -1,5 +1,6 @@
 package com.droidpad;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -15,32 +16,21 @@ import java.lang.ref.WeakReference;
 class UIHandler extends Handler implements IDPServiceStateCallback,
         WordComposer.OnWordsComposedListener {
 
-    private static final String TAG = "UIHandler";
+    private static final String TAG = UIHandler.class.getSimpleName();
 
     private static UIHandler sInstance = null;
     private WeakReference<MainActivity> mActivityRef;
     private DroidPadService mDPService;
 
     private WordComposer mComposer;
+    private AnimationDrawable mUSBAnimDrawable;
+    private AnimationDrawable mWifiAnimDrawable;
 
 
     private Fragment[] mFragments = new Fragment[2];
     private FragmentManager mFragmentManager;
 
     private int mFragmentType = FragmentType.TYPE_AI;
-
-    synchronized static UIHandler getInstance(MainActivity activity) {
-        if (sInstance == null)
-            sInstance = new UIHandler(activity);
-        return sInstance;
-    }
-
-    void destroy() {
-        if (mDPService != null)
-            mDPService.removeServiceStateCallback(this);
-        removeCallbacksAndMessages(null);
-        sInstance = null;
-    }
 
     private UIHandler(MainActivity activity) {
         mActivityRef = new WeakReference<>(activity);
@@ -51,8 +41,11 @@ class UIHandler extends Handler implements IDPServiceStateCallback,
         }
 
         LinearLayout layout = activity.findViewById(R.id.composer);
-        mComposer = new WordComposer(activity, new WeakReference<>(layout));
+        mComposer = new WordComposer(activity, layout);
         mComposer.setOnWordsComposedListener(this);
+
+        mUSBAnimDrawable = (AnimationDrawable) activity.getResources().getDrawable(R.drawable.usb_anim, null);
+        mWifiAnimDrawable = (AnimationDrawable) activity.getResources().getDrawable(R.drawable.wifi_anim, null);
 
         mFragments[FragmentType.TYPE_AI] = new AIWriteFragment();
         mFragments[FragmentType.TYPE_IME] = new IMEWriteFragment();
@@ -65,6 +58,21 @@ class UIHandler extends Handler implements IDPServiceStateCallback,
                 selectWriteFragment((mFragmentType + 1) % 2);
             }
         });
+    }
+
+    synchronized static UIHandler getInstance(MainActivity activity) {
+        if (sInstance == null)
+            sInstance = new UIHandler(activity);
+        return sInstance;
+    }
+
+    void destroy() {
+        mWifiAnimDrawable.stop();
+        mUSBAnimDrawable.stop();
+        if (mDPService != null)
+            mDPService.removeServiceStateCallback(this);
+        removeCallbacksAndMessages(null);
+        sInstance = null;
     }
 
     void selectWriteFragment(int type) {
@@ -95,44 +103,14 @@ class UIHandler extends Handler implements IDPServiceStateCallback,
 
         if (connType == Constants.SocketType.TYPE_ADB)
         {
-            post(new Runnable() {
-                @Override
-                public void run() {
-                    getConnStatus().setImageResource(R.drawable.usb_red);
-                }
-            });
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    getConnStatus().setImageResource(R.drawable.usb_red_beam);
-                }
-            }, 100);
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    getConnStatus().setImageResource(R.drawable.usb);
-                }
-            }, 300);
+            getConnStatus().setImageDrawable(mUSBAnimDrawable);
+            mUSBAnimDrawable.setVisible(true, true);
+            mUSBAnimDrawable.start();
         } else if (connType == Constants.SocketType.TYPE_WIFI)
         {
-            post(new Runnable() {
-                @Override
-                public void run() {
-                    getConnStatus().setImageResource(R.drawable.wifi_red);
-                }
-            });
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    getConnStatus().setImageResource(R.drawable.wifi_red_beam);
-                }
-            }, 100);
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    getConnStatus().setImageResource(R.drawable.wifi);
-                }
-            }, 300);
+            getConnStatus().setImageDrawable(mWifiAnimDrawable);
+            mWifiAnimDrawable.setVisible(true, true);
+            mWifiAnimDrawable.start();
         }
     }
 
