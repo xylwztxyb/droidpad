@@ -1,21 +1,27 @@
 package com.droidpad;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 
-public class IMEWriteFragment extends Fragment implements IMEFakeView.OnWordsComposedListener, View.OnClickListener {
+public class IMEWriteFragment extends Fragment implements IMEFakeView.OnWordsComposedListener,
+        View.OnClickListener,
+        ViewTreeObserver.OnGlobalLayoutListener {
 
     private IMEFakeView mFakeView;
+    private FloatingActionButton mFloatButton;
     private InputMethodManager imm;
     private UIHandler mUIHandler;
 
@@ -38,8 +44,8 @@ public class IMEWriteFragment extends Fragment implements IMEFakeView.OnWordsCom
         mFakeView.setOnWordsComposedListener(this);
         mFakeView.requestFocus();
 
-        FloatingActionButton mActionButton = v.findViewById(R.id.open_ime);
-        mActionButton.setOnClickListener(this);
+        mFloatButton = v.findViewById(R.id.open_ime);
+        mFloatButton.setOnClickListener(this);
         return v;
     }
 
@@ -57,6 +63,7 @@ public class IMEWriteFragment extends Fragment implements IMEFakeView.OnWordsCom
         AnimUtil.transLeftInAnim(getView(), Util.getDisplayWidth(getContext()));
         if (imm != null)
             imm.showSoftInput(mFakeView, InputMethodManager.SHOW_FORCED);
+        mFloatButton.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
     @Override
@@ -81,5 +88,36 @@ public class IMEWriteFragment extends Fragment implements IMEFakeView.OnWordsCom
     public void onClick(View view) {
         if (imm != null)
             imm.showSoftInput(mFakeView, InputMethodManager.SHOW_FORCED);
+    }
+
+    @Override
+    public void onGlobalLayout() {
+        Activity act = getActivity();
+        if (act != null)
+        {
+            Rect rect = new Rect();
+            act.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+            DisplayMetrics dm = new DisplayMetrics();
+            act.getWindowManager().getDefaultDisplay().getMetrics(dm);
+            float f = (float) rect.bottom / dm.heightPixels;
+            if (f >= 0.85)
+                onInputWindowHide();
+            else if (f < 0.7)
+                onInputWindowShow();
+        }
+    }
+
+    void onInputWindowHide() {
+        mUIHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mFloatButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+    }
+
+    void onInputWindowShow() {
+        mFloatButton.setVisibility(View.GONE);
     }
 }

@@ -19,8 +19,7 @@
             android:enabled="true" />
 
         <activity
-            android:name=".MainActivity"
-            android:windowSoftInputMode="adjustNothing">
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
