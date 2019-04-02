@@ -10,6 +10,12 @@
         android:focusable="true"
         android:focusableInTouchMode="true" />
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/pencil"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/open_ime"
         android:layout_width="wrap_content"
