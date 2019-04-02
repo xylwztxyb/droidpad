@@ -100,9 +100,9 @@ public class IMEWriteFragment extends Fragment implements IMEFakeView.OnWordsCom
             DisplayMetrics dm = new DisplayMetrics();
             act.getWindowManager().getDefaultDisplay().getMetrics(dm);
             float f = (float) rect.bottom / dm.heightPixels;
-            if (f >= 0.85)
+            if (f >= 0.9)
                 onInputWindowHide();
-            else if (f < 0.7)
+            else if (f < 0.8)
                 onInputWindowShow();
         }
     }
